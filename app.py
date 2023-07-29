@@ -1,16 +1,16 @@
-from flask import Flask,request,render_template
+from flask import Flask,request,render_template,jsonify
 
-obj = Flask(__name__)
+app = Flask(__name__)
 
-@obj.route('/')
+@app.route('/')
 def hello():
     return "Hello World!!!"
 
-@obj.route('/cal',methods=["GET"])
+@app.route('/cal',methods=["GET"])
 def math_op():
     operation = request.json["operation"]
-    num1 = request.json["num1"]
-    num2 = request.json["num2"]
+    num1 = int(request.json["num1"])
+    num2 = int(request.json["num2"])
 
     if operation == "add":
         result = num1+num2
@@ -19,7 +19,7 @@ def math_op():
     else:
         result = num1 * num2
 
-    return result
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True)
